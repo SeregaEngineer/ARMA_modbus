@@ -9,26 +9,26 @@
         Title="ARMA MODBUS HMI" Height="550" Width="800" ResizeMode="NoResize" Margin="0,0,0,0" Icon="/arma_iso.ico" >
     <Grid Height="534" VerticalAlignment="Center" HorizontalAlignment="Right" Width="800" >
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="20*"/>
-            <ColumnDefinition Width="209*"/>
-            <ColumnDefinition Width="171*"/>
+            <ColumnDefinition/>
         </Grid.ColumnDefinitions>
         <Grid.Background>
             <ImageBrush ImageSource="/wago.png"/>
         </Grid.Background>
-        <Label x:Name="lbl_level_PV" Content="#" HorizontalAlignment="Left"  VerticalAlignment="Top" FontSize="20" FontFamily="Impact" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" Width="75" Margin="194,272,0,0" Grid.Column="1"/>
-        <Label x:Name="lbl_valve" Content="#" HorizontalAlignment="Left"  VerticalAlignment="Top" FontSize="20" FontFamily="Impact" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" Width="75" Margin="95,357,0,0" Grid.Column="1"/>
-        <Label x:Name="lbl_RPM" Content="#" HorizontalAlignment="Left"  VerticalAlignment="Top" FontSize="20" FontFamily="Impact" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" Width="101" Margin="66,178,0,0" Grid.Column="2"/>
-        <Label x:Name="lbl_flow" Content="#" HorizontalAlignment="Left"  VerticalAlignment="Top" FontSize="20" FontFamily="Impact" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" Width="98" Margin="194,117,0,0" Grid.Column="2"/>
-        <ProgressBar x:Name="pb_level" HorizontalAlignment="Left" Height="143" Margin="298,117,0,0" VerticalAlignment="Top" Width="21" Orientation="Vertical" Value="33" Foreground="#FF9FEA90" BorderThickness="2,2,2,2" Grid.Column="1" />
-        <TextBox x:Name="txb_SetPoint" HorizontalAlignment="Left" Margin="213,125,0,0" TextWrapping="Wrap" Text="#" VerticalAlignment="Top" Width="56" Height="25"  FontSize="20" FontFamily="Impact" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" Background="#FFE6E6E6" Grid.Column="1" />
-        <Button Content="set" HorizontalAlignment="Left" Margin="274,125,0,0" VerticalAlignment="Top" Width="19" Height="25" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Click="Button_Click" BorderBrush="#FFBCBCBC" Grid.Column="1"/>
-        <Rectangle HorizontalAlignment="Right" Height="87" Margin="0,27,301,0" Stroke="Black" VerticalAlignment="Top" Width="112" Grid.Column="1"/>
-        <Label Content="Settings" HorizontalAlignment="Right" Margin="0,0,347,494" VerticalAlignment="Bottom" Background="#FFFAFAFA" Grid.Column="1"/>
-        <TextBox x:Name="txb_ip" HorizontalAlignment="Right" Margin="0,0,316,464" TextWrapping="Wrap" VerticalAlignment="Bottom" Width="84" Height="25" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Text="ip address" Grid.Column="1"/>
-        <Button x:Name="btn_change_ip" Content="Change IP" HorizontalAlignment="Left" Margin="18,78,0,0" VerticalAlignment="Top" Width="84" Click="btn_change_ip_Click" Grid.Column="1" />
-        <Grid Loaded="Grid_Loaded" Grid.ColumnSpan="3">
-            <Label Content="v 1.0" HorizontalAlignment="Left" Margin="758,498,0,0" VerticalAlignment="Top" FontSize="8"/>
+        <Label x:Name="lbl_level_PV" Content="#" HorizontalAlignment="Left"  VerticalAlignment="Top" FontSize="20" FontFamily="Impact" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" Width="75" Margin="234,272,0,0"/>
+        <Label x:Name="lbl_valve" Content="#" HorizontalAlignment="Left"  VerticalAlignment="Top" FontSize="20" FontFamily="Impact" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" Width="75" Margin="135,357,0,0"/>
+        <Label x:Name="lbl_RPM" Content="#" HorizontalAlignment="Left"  VerticalAlignment="Top" FontSize="20" FontFamily="Impact" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" Width="101" Margin="524,178,0,0"/>
+        <Label x:Name="lbl_flow" Content="#" HorizontalAlignment="Left"  VerticalAlignment="Top" FontSize="20" FontFamily="Impact" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" Width="98" Margin="652,117,0,0"/>
+        <ProgressBar x:Name="pb_level" HorizontalAlignment="Left" Height="143" Margin="338,117,0,0" VerticalAlignment="Top" Width="21" Orientation="Vertical" Value="33" Foreground="#FF9FEA90" BorderThickness="2,2,2,2" />
+        <TextBox x:Name="txb_SetPoint" HorizontalAlignment="Left" Margin="253,125,0,0" TextWrapping="Wrap" Text="#" VerticalAlignment="Top" Width="56" Height="25"  FontSize="20" FontFamily="Impact" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" Background="#FFE6E6E6" />
+        <Button Content="set" HorizontalAlignment="Left" Margin="314,125,0,0" VerticalAlignment="Top" Width="19" Height="25" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Click="Button_Click" BorderBrush="#FFBCBCBC"/>
+        <Rectangle HorizontalAlignment="Right" Height="87" Margin="0,27,643,0" Stroke="Black" VerticalAlignment="Top" Width="112"/>
+        <Label Content="Settings" HorizontalAlignment="Right" Margin="0,0,689,494" VerticalAlignment="Bottom" Background="#FFFAFAFA"/>
+        <TextBox x:Name="txb_ip" HorizontalAlignment="Right" Margin="0,0,658,464" TextWrapping="Wrap" VerticalAlignment="Bottom" Width="84" Height="25" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Text="ip address"/>
+        <Button x:Name="btn_change_ip" Content="Change IP" HorizontalAlignment="Left" Margin="58,78,0,0" VerticalAlignment="Top" Width="84" Click="btn_change_ip_Click" />
+        <Grid Loaded="Grid_Loaded">
+            <Label Content="v 1.0" HorizontalAlignment="Left" Margin="764,347,0,0" VerticalAlignment="Top" FontSize="8"/>
+            <WpfPlot Name="WpfPlot1" HorizontalAlignment="Right" VerticalAlignment="Bottom" Height="127" Width="457" Margin="0,0,10,23"/>
+            <Border BorderThickness="1" HorizontalAlignment="Left" Height="127" Margin="333,384,0,0" VerticalAlignment="Top" Width="457"/>
         </Grid>
 
 
