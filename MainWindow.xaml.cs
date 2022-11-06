@@ -29,6 +29,8 @@ namespace ARMA_MODBUS_HMI
         public MainWindow()
         {
             InitializeComponent();
+            WpfPlot1.Configuration.LockHorizontalAxis = true;
+            WpfPlot1.Configuration.LockVerticalAxis = true;
             WpfPlot1.Plot.Style(System.Drawing.Color.Transparent);
             WpfPlot1.BorderBrush = new SolidColorBrush(Colors.Black);
             WpfPlot1.Plot.SetAxisLimits(yMin: 0, yMax: 100, xMin:0, xMax: 100);
