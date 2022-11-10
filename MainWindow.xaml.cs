@@ -20,7 +20,7 @@ namespace ARMA_MODBUS_HMI
         ModbusClient modbusClient;
         System.Windows.Threading.DispatcherTimer dispatcherTimer = new System.Windows.Threading.DispatcherTimer();
         int[] readHoldingRegisters;
-
+        bool alarm = false;
         
 
         double[] level_trand = new double[190];
@@ -29,6 +29,7 @@ namespace ARMA_MODBUS_HMI
         public MainWindow()
         {
             InitializeComponent();
+            lbl_unloading.Visibility = Visibility.Collapsed;
             WpfPlot1.Configuration.LockHorizontalAxis = true;
             WpfPlot1.Configuration.LockVerticalAxis = true;
             WpfPlot1.Plot.Style(System.Drawing.Color.Transparent);
@@ -65,12 +66,48 @@ namespace ARMA_MODBUS_HMI
         }
 
 
+        private void Grid_Loaded(object sender, RoutedEventArgs e)
+        {
+            txb_ip.Text = Properties.Settings.Default.IP;
+            modbusClient = new ModbusClient(txb_ip.Text, 502);
+            modbusClient.ConnectionTimeout = 1000;
+
+            dispatcherTimer.Tick += dispatcherTimer_Tick;
+            dispatcherTimer.Interval = new TimeSpan(0, 0, 0, 0, 300);
+           // connect();
+        }
+
+        private void btn_connect_Click(object sender, RoutedEventArgs e)
+        {
+            connect();
+            Properties.Settings.Default.IP = txb_ip.Text;
+        }
+
+        private void btn_disconnect_Click(object sender, RoutedEventArgs e)
+        {
+            dispatcherTimer.Stop();
+            try
+            {
+                modbusClient.Disconnect();
+                lbl_level_PV.Content = "###";
+                lbl_valve.Content = "###";
+                lbl_RPM.Content = "###";
+                lbl_flow.Content = "###";
+                txb_SetPoint.Text = "###";
+                pb_level.Value = 0;
+            }
+            catch
+            {
+
+            }
+        }
+
 
         private void dispatcherTimer_Tick(object sender, EventArgs e)
         {
             dispatcherTimer.Stop();
-
-           
+            //bool status = modbusClient.Connected;
+            
 
             if (modbusClient.Connected)
             {
@@ -84,6 +121,17 @@ namespace ARMA_MODBUS_HMI
                     lbl_flow.Content = readHoldingRegisters[6].ToString() + " SCFM";
                     pb_level.Value = readHoldingRegisters[1];
 
+                    if (readHoldingRegisters[1] >= 80)
+                    {
+                        lbl_unloading.Visibility = Visibility.Visible;
+                        alarm = true;
+                    }
+                    else if (alarm == true && readHoldingRegisters[1] <= 79)
+                    {
+                        lbl_unloading.Visibility = Visibility.Collapsed;
+                        alarm = false;
+                    }
+
                     if (!txb_SetPoint.IsFocused)
                     {
                         txb_SetPoint.Text = readHoldingRegisters[0].ToString();
@@ -95,19 +143,29 @@ namespace ARMA_MODBUS_HMI
                     Array.Copy(level_trand, 1, level_trand, 0, level_trand.Length - 1);
                     Array.Copy(rpm_trand, 1, rpm_trand, 0, rpm_trand.Length - 1);
                     level_trand[level_trand.Length - 1] = readHoldingRegisters[1];
-                    rpm_trand[rpm_trand.Length - 1] = readHoldingRegisters[5] * 100 / 2400;
+                    rpm_trand[rpm_trand.Length - 1] = readHoldingRegisters[5] * 100 / 1800;
                  //   WpfPlot1.Plot.SetAxisLimits(yMin: 0, yMax: level_trand.Max() * 1.2);
                   
 
                 }
                 catch
                 {
-
-                }
+                    lbl_level_PV.Content = "###";
+                    lbl_valve.Content = "###";
+                    lbl_RPM.Content = "###";
+                    lbl_flow.Content = "###";
+                    if (!txb_SetPoint.IsFocused)
+                    {
+                        txb_SetPoint.Text = "###";
+                    }
+                    pb_level.Value = 0;
+                    dispatcherTimer.Stop();
+                    modbusClient.Disconnect();
+            }
 
             }
 
-            else
+           else
             {
                 lbl_level_PV.Content = "###";
                 lbl_valve.Content = "###";
@@ -118,8 +176,8 @@ namespace ARMA_MODBUS_HMI
                     txb_SetPoint.Text = "###";
                 }
                 pb_level.Value = 0;
-           
-               // connect();
+                dispatcherTimer.Stop();
+                modbusClient.Disconnect();
             }
             WpfPlot1.Refresh();
             dispatcherTimer.Start();
@@ -143,8 +201,6 @@ namespace ARMA_MODBUS_HMI
 
             dispatcherTimer.Start();
 
-
-
         }
 
 
@@ -160,14 +216,11 @@ namespace ARMA_MODBUS_HMI
             {
                 int sp_value = Int16.Parse(txb_SetPoint.Text);
                 dispatcherTimer.Stop();
-                if (modbusClient.Connected)
-                {
                     if (sp_value < 80 && sp_value > 9)
                     {
                         modbusClient.WriteSingleRegister(12294, sp_value);
 
                     }
-                }
             }
             catch
             {
@@ -178,21 +231,5 @@ namespace ARMA_MODBUS_HMI
         }
 
 
-        private void btn_change_ip_Click(object sender, RoutedEventArgs e)
-        {
-            connect();
-            Properties.Settings.Default.IP = txb_ip.Text;
-        }
-
-        private void Grid_Loaded(object sender, RoutedEventArgs e)
-        {
-            txb_ip.Text = Properties.Settings.Default.IP;
-            modbusClient = new ModbusClient(txb_ip.Text, 502);
-            modbusClient.ConnectionTimeout = 200;
-
-            dispatcherTimer.Tick += dispatcherTimer_Tick;
-            dispatcherTimer.Interval = new TimeSpan(0, 0, 0, 0, 300);
-            connect();
-        }
     }
 }
