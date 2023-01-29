@@ -21,7 +21,7 @@ namespace ARMA_MODBUS_HMI
         System.Windows.Threading.DispatcherTimer dispatcherTimer = new System.Windows.Threading.DispatcherTimer();
         int[] readHoldingRegisters;
         bool alarm = false;
-        
+        int sp_value = 0;
 
         double[] level_trand = new double[190];
         double[] rpm_trand = new double[190];
@@ -93,7 +93,7 @@ namespace ARMA_MODBUS_HMI
                 lbl_valve.Content = "###";
                 lbl_RPM.Content = "###";
                 lbl_flow.Content = "###";
-                txb_SetPoint.Text = "###";
+                txb_SetPoint.Content = "###";
                 pb_level.Value = 0;
             }
             catch
@@ -121,6 +121,9 @@ namespace ARMA_MODBUS_HMI
                     lbl_flow.Content = readHoldingRegisters[6].ToString() + " SCFM";
                     pb_level.Value = readHoldingRegisters[1];
 
+                    sp_value = readHoldingRegisters[0];
+                    txb_SetPoint.Content = sp_value.ToString();
+
                     if (readHoldingRegisters[1] >= 80)
                     {
                         lbl_unloading.Visibility = Visibility.Visible;
@@ -132,10 +135,8 @@ namespace ARMA_MODBUS_HMI
                         alarm = false;
                     }
 
-                    if (!txb_SetPoint.IsFocused)
-                    {
-                        txb_SetPoint.Text = readHoldingRegisters[0].ToString();
-                    }
+                     
+                    
 
 
 
@@ -154,10 +155,9 @@ namespace ARMA_MODBUS_HMI
                     lbl_valve.Content = "###";
                     lbl_RPM.Content = "###";
                     lbl_flow.Content = "###";
-                    if (!txb_SetPoint.IsFocused)
-                    {
-                        txb_SetPoint.Text = "###";
-                    }
+
+                    txb_SetPoint.Content = "###";
+                    
                     pb_level.Value = 0;
                     dispatcherTimer.Stop();
                     modbusClient.Disconnect();
@@ -173,7 +173,7 @@ namespace ARMA_MODBUS_HMI
                 lbl_flow.Content = "###";
                 if (!txb_SetPoint.IsFocused)
                 {
-                    txb_SetPoint.Text = "###";
+                    txb_SetPoint.Content = "###";
                 }
                 pb_level.Value = 0;
                 dispatcherTimer.Stop();
@@ -212,15 +212,20 @@ namespace ARMA_MODBUS_HMI
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
+
+        }
+
+        private void up_setpoint(object sender, RoutedEventArgs e)
+        {
             try
             {
-                int sp_value = Int16.Parse(txb_SetPoint.Text);
+           
                 dispatcherTimer.Stop();
-                    if (sp_value < 80 && sp_value > 9)
-                    {
-                        modbusClient.WriteSingleRegister(12294, sp_value);
+                if (sp_value < 80 )
+                {
+                    modbusClient.WriteSingleRegister(12294, sp_value + 5);
 
-                    }
+                }
             }
             catch
             {
@@ -230,6 +235,24 @@ namespace ARMA_MODBUS_HMI
             dispatcherTimer.Start();
         }
 
+        private void down_setpoint(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+             
+                dispatcherTimer.Stop();
+                if (sp_value > 10)
+                {
+                    modbusClient.WriteSingleRegister(12294, sp_value - 5);
 
+                }
+            }
+            catch
+            {
+
+            }
+
+            dispatcherTimer.Start();
+        }
     }
 }

@@ -16,7 +16,7 @@
         </Grid.Background>
         <Rectangle HorizontalAlignment="Right" Height="107" Margin="0,27,643,0" Stroke="Black" VerticalAlignment="Top" Width="112"/>
         <Grid Loaded="Grid_Loaded">
-            <Label Content="v 1.0" HorizontalAlignment="Left" Margin="764,347,0,0" VerticalAlignment="Top" FontSize="8"/>
+            <Label Content="v 1.1" HorizontalAlignment="Left" Margin="764,347,0,0" VerticalAlignment="Top" FontSize="8"/>
             <WpfPlot x:Name="WpfPlot1" HorizontalAlignment="Right" VerticalAlignment="Bottom" Height="127" Width="457" Margin="0,0,10,23"/>
             <Border BorderThickness="1" HorizontalAlignment="Left" Height="127" Margin="333,384,0,0" VerticalAlignment="Top" Width="457"/>
             <Button x:Name="btn_connect_Copy" Content="Connect" HorizontalAlignment="Left" Margin="58,78,0,0" VerticalAlignment="Top" Width="84" Click="btn_connect_Click"  />
@@ -30,11 +30,13 @@
         <Label x:Name="lbl_RPM" Content="#" HorizontalAlignment="Left"  VerticalAlignment="Top" FontSize="20" FontFamily="Impact" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" Width="101" Margin="524,178,0,0"/>
         <Label x:Name="lbl_flow" Content="#" HorizontalAlignment="Left"  VerticalAlignment="Top" FontSize="20" FontFamily="Impact" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" Width="121" Margin="641,117,0,0"/>
         <ProgressBar x:Name="pb_level" HorizontalAlignment="Left" Height="143" Margin="338,117,0,0" VerticalAlignment="Top" Width="21" Orientation="Vertical" Value="33" Foreground="#FF9FEA90" BorderThickness="2,2,2,2" />
-        <TextBox x:Name="txb_SetPoint" HorizontalAlignment="Left" Margin="253,125,0,0" TextWrapping="Wrap" Text="#" VerticalAlignment="Top" Width="56" Height="25"  FontSize="20" FontFamily="Impact" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" Background="#FFE6E6E6" />
-        <Button Content="set" HorizontalAlignment="Left" Margin="314,125,0,0" VerticalAlignment="Top" Width="19" Height="25" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Click="Button_Click" BorderBrush="#FFBCBCBC"/>
+        <Label x:Name="txb_SetPoint" Content="#" HorizontalAlignment="Left"  VerticalAlignment="Top" FontSize="20" FontFamily="Impact" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" Width="75" Margin="234,130,0,0"/>
+        
         <Label Content="Settings" HorizontalAlignment="Right" Margin="0,0,689,494" VerticalAlignment="Bottom" Background="#FFFAFAFA"/>
         <TextBox x:Name="txb_ip" HorizontalAlignment="Right" Margin="0,0,658,464" TextWrapping="Wrap" VerticalAlignment="Bottom" Width="84" Height="25" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Text="ip address"/>
-
+        <Button Content="▲" HorizontalAlignment="Left" Margin="314,125,0,0" VerticalAlignment="Top" Width="19" Height="20" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Click="up_setpoint" BorderBrush="#FFBCBCBC"/>
+        <Button Content="▼" HorizontalAlignment="Left" Margin="314,150,0,0" VerticalAlignment="Top" Width="19" Height="20" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Click="down_setpoint" BorderBrush="#FFBCBCBC" />
+        
 
     </Grid>
 
